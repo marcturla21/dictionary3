@@ -1,5 +1,3 @@
-// definition.dart
-
 class Definition {
   final String word;
   final String phonetic;
@@ -8,7 +6,11 @@ class Definition {
   Definition({required this.word, required this.phonetic, required this.meanings});
 
   factory Definition.fromJson(Map<String, dynamic> json) {
-    // Add your code for parsing JSON data into Definition objects here
+    return Definition(
+      word: json['word'],
+      phonetic: json['phonetic'],
+      meanings: List<Meaning>.from(json['meanings'].map((meaning) => Meaning.fromJson(meaning))),
+    );
   }
 }
 
@@ -18,5 +20,10 @@ class Meaning {
 
   Meaning({required this.partOfSpeech, required this.definitions});
 
-  // Add your code for parsing JSON data into Meaning objects here
+  factory Meaning.fromJson(Map<String, dynamic> json) {
+    return Meaning(
+      partOfSpeech: json['partOfSpeech'],
+      definitions: List<String>.from(json['definitions'].map((definition) => definition['definition'])),
+    );
+  }
 }
